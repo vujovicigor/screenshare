@@ -1,0 +1,29 @@
+<canvas id="qrcanvas"></canvas>
+<style>
+qrcanvas{
+    width:16em;
+    height:16em;
+}
+</style>
+<script>
+component.exports = {
+    onrender: function () {
+        var self = this;
+        var QRCode = require('qrcode')
+        var canvas = document.getElementById('qrcanvas')
+        this.observe('url', function(n,o,k,i){
+            if (n)
+            QRCode.toCanvas(canvas, n, function (error) {
+                if (error) console.error(error)
+                console.log('success!');
+            })
+        }, {init:false})
+    },
+    data:function(){
+        return {
+            url:null
+        }
+    }
+}        
+</script>
+

@@ -1,0 +1,82 @@
+{{#if !broadcasterSockId && !chromeExtensionInstalled}}
+<div>
+    - Install ScreenShare chrome extension from 
+    <button primary on-click="installScreenCaptureExtension">here</button>
+    or <a href="https://chrome.google.com/webstore/detail/ajhifddimkapgcifgcodmmfdlknahffk" target="_blank">Here</a>
+
+</div>
+{{/if}}
+{{#if !broadcasterSockId && chromeExtensionInstalled && !videoIsPlaying}}
+<div>
+    <button primary on-click="startBroadcast">Start ScreenShare</button>
+</div>
+{{/if}}
+
+
+
+{{#if !broadcasterSockId}}
+<a href="{{loc}}?id={{mysockid}}" target="_blank">Share this link</a>
+<qrcode url="{{loc}}?id={{mysockid}}"></qrcode>
+{{/if}}
+<div id="vn">
+    <video play id="video"></video>
+    {{#if !videoIsPlaying}}<noise id="noise"></noise>{{/if}}
+</div>
+<style>
+    #video {
+        width: 100%;
+    }
+    #vn{
+        width: 100%;
+        position:relative;
+    }
+</style>
+
+    
+<script>
+//        var anime = require('animejs');
+        component.exports = {
+            onrender: function () {
+                var self = this;
+                self.on('installScreenCaptureExtension', function(){
+                    window.installScreenCaptureExtension();
+                })
+                this.stream=null;
+                var broadcasterSockId = document.location.search.split('=').pop();
+                self.set('broadcasterSockId', broadcasterSockId);
+                self.on('startBroadcast', function(){
+                    getScreenId(function (error, sourceId, screen_constraints) {
+                        console.log('screen_constraints',screen_constraints)
+                        navigator.getUserMedia = navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
+                        navigator.getUserMedia(screen_constraints, function (stream) {
+                            self.stream=stream;
+                            document.getElementById('video').srcObject = stream;
+                            document.getElementById('video').play();
+                            self.set('videoIsPlaying',true);
+                        }, function (error) {
+                            console.error(error);
+                        });
+                    });
+                })
+                if (!broadcasterSockId) { // you are broadcaster
+                    self.set('mysockid', socket.id);
+                } else {
+                    socket.emit('initP2PWith', broadcasterSockId);
+                    initP2PWith(broadcasterSockId, false);
+                }
+            },
+            data:function(){
+                return {
+                      mysockid:null
+                    , loc: document.location.href
+                    , broadcasterSockId:null
+                    , videoIsPlaying:false
+                    , chromeExtensionInstalled:false
+                }
+            }
+        }        
+    
+</script>
+    
+
+
