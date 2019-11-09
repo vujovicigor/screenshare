@@ -12,8 +12,8 @@
 {{#if !broadcasterSockId}}
 <p style="visibility:{{videoIsPlaying?'visible':'hidden'}}">Your screen is now visible at<br>  
 <a href="{{loc}}?id={{mysockid}}" target="_blank">{{loc}}?id={{mysockid}}</a>
-
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+&nbsp;
+<svg style="width:1em" title="Copy to clipboard" on-click="cp2kb" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 460 460" style="enable-background:new 0 0 460 460;" xml:space="preserve">
 <g>
 	<g>
@@ -61,6 +61,12 @@
                 this.stream=null;
                 var broadcasterSockId = document.location.search.split('=').pop();
                 self.set('broadcasterSockId', broadcasterSockId);
+
+                self.on('cp2kb', function(){
+                  var link = self.get('loc') + '?id=' + self.get('mysockid')
+                  navigator.clipboard.writeText(link)//.then(e=>iziToast.success({ message: 'Code copied to clipboard.'}))
+                })
+
                 self.on('startBroadcast', function(){
                     //getScreenId(function (error, sourceId, screen_constraints) {
                         //console.log('screen_constraints',screen_constraints)
