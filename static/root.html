@@ -2,8 +2,10 @@
 <br>
 <div>
     <button disabled={{ broadcasterSockId || videoIsPlaying}} primary on-click="startBroadcast">Share my screen</button>
+<!--
     <input disabled={{ broadcasterSockId || videoIsPlaying}} type="checkbox" id="checkbox-2" checked="{{audio}}"> 
     <label for="checkbox-2">Audio</label>    
+-->
 </div>
 {{/if}}
 
@@ -53,7 +55,7 @@
                             audio: true
                           }
                         console.log('audio', displayMediaOptions)
-                        
+
                         try {    
                           navigator.mediaDevices.getDisplayMedia(displayMediaOptions).then(function(stream){
                             self.stream=stream;
