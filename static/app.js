@@ -19,7 +19,7 @@ Ractive.prototype.unset = function(keypath){
     return this.update(keypath);
 }
 
-console.log('ke')
+//console.log('ke')
 /*
 window.alertify = require('alertifyjs')
 require('ion-sound')
@@ -157,7 +157,8 @@ var ractive = new Ractive.components.Root({
 });
 window.ractive = ractive;
 
-ractive.set('chromeExtensionInstalled', false);
+ractive.set('chromeExtensionInstalled', true);
+/*
 var tryCount=15;
 var to = null;
 window.checkChromeExtensionStatus = function(){
@@ -179,5 +180,5 @@ window.installScreenCaptureExtension = function(){
             function(error){ alert(error); }
         );
 }
-
+*/
 

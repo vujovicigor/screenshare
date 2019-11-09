@@ -1,21 +1,8 @@
-{{#if !broadcasterSockId && !chromeExtensionInstalled}}
-<div>
-    - Install ScreenShare chrome extension from 
-    <!--
-    <button primary on-click="installScreenCaptureExtension">here</button>
-    or 
-    -->
-    <a href="https://chrome.google.com/webstore/detail/ajhifddimkapgcifgcodmmfdlknahffk" target="_blank">Here</a>
-
-</div>
-{{/if}}
-{{#if !broadcasterSockId && chromeExtensionInstalled && !videoIsPlaying}}
+{{#if !broadcasterSockId && !videoIsPlaying}}
 <div>
     <button primary on-click="startBroadcast">Start ScreenShare</button>
 </div>
 {{/if}}
-
-
 
 {{#if !broadcasterSockId}}
 <a href="{{loc}}?id={{mysockid}}" target="_blank">Share this link</a>
@@ -41,25 +28,31 @@
         component.exports = {
             onrender: function () {
                 var self = this;
+                /*
                 self.on('installScreenCaptureExtension', function(){
                     window.installScreenCaptureExtension();
                 })
+                */
                 this.stream=null;
                 var broadcasterSockId = document.location.search.split('=').pop();
                 self.set('broadcasterSockId', broadcasterSockId);
                 self.on('startBroadcast', function(){
-                    getScreenId(function (error, sourceId, screen_constraints) {
-                        console.log('screen_constraints',screen_constraints)
-                        navigator.getUserMedia = navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
-                        navigator.getUserMedia(screen_constraints, function (stream) {
+                    //getScreenId(function (error, sourceId, screen_constraints) {
+                        //console.log('screen_constraints',screen_constraints)
+                        //navigator.getUserMedia = navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
+                        let stream = null;
+                        let displayMediaOptions = {};
+                        try {    
+                          navigator.mediaDevices.getDisplayMedia(displayMediaOptions).then(function(stream){
                             self.stream=stream;
                             document.getElementById('video').srcObject = stream;
                             document.getElementById('video').play();
                             self.set('videoIsPlaying',true);
-                        }, function (error) {
-                            console.error(error);
-                        });
-                    });
+                          });
+                        } catch(err) {
+                          console.error("stream Error: " + err);
+                        }                        
+                    //});
                 })
                 if (!broadcasterSockId) { // you are broadcaster
                     self.set('mysockid', socket.id);
@@ -74,7 +67,7 @@
                     , loc: document.location.href
                     , broadcasterSockId:null
                     , videoIsPlaying:false
-                    , chromeExtensionInstalled:false
+                    //, chromeExtensionInstalled:false
                 }
             }
         }        
