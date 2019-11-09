@@ -1,11 +1,12 @@
-{{#if !broadcasterSockId && !videoIsPlaying}}
+
 <div>
-    <button primary on-click="startBroadcast">Start ScreenShare</button>
+    <button disabled={{ broadcasterSockId || videoIsPlaying}} primary on-click="startBroadcast">Share my screen</button>
 </div>
-{{/if}}
 
 {{#if !broadcasterSockId}}
+<p>
 <a href="{{loc}}?id={{mysockid}}" target="_blank">{{loc}}?id={{mysockid}}</a>
+</p>
 <qrcode url="{{loc}}?id={{mysockid}}"></qrcode>
 {{/if}}
 <div id="vn">
