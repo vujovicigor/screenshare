@@ -26163,7 +26163,7 @@ component.exports = {
     
 
 component.exports.template = {v:4,t:[{p:[1,1,0],t:7,e:"canvas",m:[{n:"style",f:["width:",{t:2,r:"w",p:[1,22,21]}," !important"],t:13},{n:"id",f:"canvas",t:13}]}]};
-component.exports.css = "#canvas{width:100%;position:absolute;top:0;right:0;left:0;bottom:0;opacity:.4}";
+component.exports.css = "#canvas{width:100%;position:absolute;top:0;left:50%;transform:translateX(-50%);bottom:0;opacity:.4}";
 module.exports = Ractive.extend(component.exports);
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12)(module)))
