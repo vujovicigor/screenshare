@@ -3,12 +3,13 @@
     <button disabled={{ broadcasterSockId || videoIsPlaying}} primary on-click="startBroadcast">Share my screen</button>
 </div>
 
-{{#if !broadcasterSockId}}
+{{#if !broadcasterSockId && videoIsPlaying}}
 <p>
 <a href="{{loc}}?id={{mysockid}}" target="_blank">{{loc}}?id={{mysockid}}</a>
 </p>
 <qrcode url="{{loc}}?id={{mysockid}}"></qrcode>
 {{/if}}
+
 <div id="vn">
     <video controls id="video"></video>
     {{#if !videoIsPlaying}}<noise id="noise"></noise>{{/if}}
