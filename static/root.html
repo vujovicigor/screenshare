@@ -3,7 +3,7 @@
 <div>
     <button disabled={{ broadcasterSockId || videoIsPlaying}} primary on-click="startBroadcast">Share my screen</button>
     <input disabled={{ broadcasterSockId || videoIsPlaying}} type="checkbox" id="checkbox-2" checked="{{audio}}"> 
-    <label for="checkbox-2">Multiple rows</label>    
+    <label for="checkbox-2">Audio</label>    
 </div>
 {{/if}}
 
@@ -46,19 +46,14 @@
                         //console.log('screen_constraints',screen_constraints)
                         //navigator.getUserMedia = navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
                         let stream = null;
-                        let displayMediaOptions = {};
+                        let displayMediaOptions = {video: true, audio: false};
                         if (self.get('audio'))
                           displayMediaOptions = {
-                            video: {
-                              cursor: "always"
-                            },
-                            audio: {
-                              echoCancellation: true,
-                              noiseSuppression: true,
-                              sampleRate: 44100
-                            }
+                            video: true,
+                            audio: true
                           }
-
+                        console.log('audio', displayMediaOptions)
+                        
                         try {    
                           navigator.mediaDevices.getDisplayMedia(displayMediaOptions).then(function(stream){
                             self.stream=stream;
