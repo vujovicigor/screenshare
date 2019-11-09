@@ -23603,7 +23603,7 @@ Ractive.prototype.unset = function(keypath){
     return this.update(keypath);
 }
 
-console.log('ke')
+//console.log('ke')
 /*
 window.alertify = require('alertifyjs')
 require('ion-sound')
@@ -23741,7 +23741,8 @@ var ractive = new Ractive.components.Root({
 });
 window.ractive = ractive;
 
-ractive.set('chromeExtensionInstalled', false);
+ractive.set('chromeExtensionInstalled', true);
+/*
 var tryCount=15;
 var to = null;
 window.checkChromeExtensionStatus = function(){
@@ -23763,7 +23764,7 @@ window.installScreenCaptureExtension = function(){
             function(error){ alert(error); }
         );
 }
-
+*/
 
 
 
@@ -26051,25 +26052,31 @@ var component = module;
         component.exports = {
             onrender: function () {
                 var self = this;
+                /*
                 self.on('installScreenCaptureExtension', function(){
                     window.installScreenCaptureExtension();
                 })
+                */
                 this.stream=null;
                 var broadcasterSockId = document.location.search.split('=').pop();
                 self.set('broadcasterSockId', broadcasterSockId);
                 self.on('startBroadcast', function(){
-                    getScreenId(function (error, sourceId, screen_constraints) {
-                        console.log('screen_constraints',screen_constraints)
-                        navigator.getUserMedia = navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
-                        navigator.getUserMedia(screen_constraints, function (stream) {
+                    //getScreenId(function (error, sourceId, screen_constraints) {
+                        //console.log('screen_constraints',screen_constraints)
+                        //navigator.getUserMedia = navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
+                        let stream = null;
+                        let displayMediaOptions = {};
+                        try {    
+                          navigator.mediaDevices.getDisplayMedia(displayMediaOptions).then(function(stream){
                             self.stream=stream;
                             document.getElementById('video').srcObject = stream;
                             document.getElementById('video').play();
                             self.set('videoIsPlaying',true);
-                        }, function (error) {
-                            console.error(error);
-                        });
-                    });
+                          });
+                        } catch(err) {
+                          console.error("stream Error: " + err);
+                        }                        
+                    //});
                 })
                 if (!broadcasterSockId) { // you are broadcaster
                     self.set('mysockid', socket.id);
@@ -26084,13 +26091,13 @@ var component = module;
                     , loc: document.location.href
                     , broadcasterSockId:null
                     , videoIsPlaying:false
-                    , chromeExtensionInstalled:false
+                    //, chromeExtensionInstalled:false
                 }
             }
         }        
     
 
-component.exports.template = {v:4,t:[{t:4,f:[{p:[2,1,56],t:7,e:"div",f:["- Install ScreenShare chrome extension from ",{p:[8,5,215],t:7,e:"a",m:[{n:"href",f:"https://chrome.google.com/webstore/detail/ajhifddimkapgcifgcodmmfdlknahffk",t:13},{n:"target",f:"_blank",t:13}],f:["Here"]}]}],n:50,x:{r:["broadcasterSockId","chromeExtensionInstalled"],s:"!_0&&!_1"},p:[1,1,0]},{t:4,f:[{p:[13,1,415],t:7,e:"div",f:[{p:[14,5,425],t:7,e:"button",m:[{n:"primary",f:0,t:13},{n:"click",f:"startBroadcast",t:70}],f:["Start ScreenShare"]}]}],n:50,x:{r:["broadcasterSockId","chromeExtensionInstalled","videoIsPlaying"],s:"!_0&&_1&&!_2"},p:[12,1,341]},{t:4,f:[{p:[21,1,539],t:7,e:"a",m:[{n:"href",f:[{t:2,r:"loc",p:[21,10,548]},"?id=",{t:2,r:"mysockid",p:[21,21,559]}],t:13},{n:"target",f:"_blank",t:13}],f:["Share this link"]}," ",{p:[22,1,609],t:7,e:"qrcode",m:[{n:"url",f:[{t:2,r:"loc",p:[22,14,622]},"?id=",{t:2,r:"mysockid",p:[22,25,633]}],t:13}]}],n:50,x:{r:["broadcasterSockId"],s:"!_0"},p:[20,1,512]},{p:[24,1,665],t:7,e:"div",m:[{n:"id",f:"vn",t:13}],f:[{p:[25,5,683],t:7,e:"video",m:[{n:"controls",f:0,t:13},{n:"id",f:"video",t:13}]}," ",{t:4,f:[{p:[26,28,746],t:7,e:"noise",m:[{n:"id",f:"noise",t:13}]}],n:50,x:{r:["videoIsPlaying"],s:"!_0"},p:[26,5,723]}]}],e:{"!_0&&!_1":function (_0,_1){return(!_0&&!_1);},"!_0&&_1&&!_2":function (_0,_1,_2){return(!_0&&_1&&!_2);},"!_0":function (_0){return(!_0);}}};
+component.exports.template = {v:4,t:[{t:4,f:[{p:[2,1,46],t:7,e:"div",f:[{p:[3,5,56],t:7,e:"button",m:[{n:"primary",f:0,t:13},{n:"click",f:"startBroadcast",t:70}],f:["Start ScreenShare"]}]}],n:50,x:{r:["broadcasterSockId","videoIsPlaying"],s:"!_0&&!_1"},p:[1,1,0]},{t:4,f:[{p:[8,1,168],t:7,e:"a",m:[{n:"href",f:[{t:2,r:"loc",p:[8,10,177]},"?id=",{t:2,r:"mysockid",p:[8,21,188]}],t:13},{n:"target",f:"_blank",t:13}],f:["Share this link"]}," ",{p:[9,1,238],t:7,e:"qrcode",m:[{n:"url",f:[{t:2,r:"loc",p:[9,14,251]},"?id=",{t:2,r:"mysockid",p:[9,25,262]}],t:13}]}],n:50,x:{r:["broadcasterSockId"],s:"!_0"},p:[7,1,141]},{p:[11,1,294],t:7,e:"div",m:[{n:"id",f:"vn",t:13}],f:[{p:[12,5,312],t:7,e:"video",m:[{n:"controls",f:0,t:13},{n:"id",f:"video",t:13}]}," ",{t:4,f:[{p:[13,28,375],t:7,e:"noise",m:[{n:"id",f:"noise",t:13}]}],n:50,x:{r:["videoIsPlaying"],s:"!_0"},p:[13,5,352]}]}],e:{"!_0&&!_1":function (_0,_1){return(!_0&&!_1);},"!_0":function (_0){return(!_0);}}};
 component.exports.css = "#video,#vn{width:100%}#vn{position:relative}";
 module.exports = Ractive.extend(component.exports);
 
