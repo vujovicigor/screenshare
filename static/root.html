@@ -12,7 +12,7 @@
 {{/if}}
 <div id="vn">
     <video style="width: {{broadcasterSockId?'100%':'39em'}};" controls id="video"></video>
-    {{#if !videoIsPlaying}}<noise id="noise"></noise>{{/if}}
+    {{#if !videoIsPlaying}}<noise style="width: {{broadcasterSockId?'100%':'39em'}} important;" id="noise"></noise>{{/if}}
 </div>
 <style>
     #video {
