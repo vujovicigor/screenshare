@@ -26066,6 +26066,18 @@ var component = module;
                         //navigator.getUserMedia = navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
                         let stream = null;
                         let displayMediaOptions = {};
+                        if (self.get('audio'))
+                          displayMediaOptions = {
+                            video: {
+                              cursor: "always"
+                            },
+                            audio: {
+                              echoCancellation: true,
+                              noiseSuppression: true,
+                              sampleRate: 44100
+                            }
+                          }
+
                         try {    
                           navigator.mediaDevices.getDisplayMedia(displayMediaOptions).then(function(stream){
                             self.stream=stream;
@@ -26091,13 +26103,14 @@ var component = module;
                     , loc: document.location.href
                     , broadcasterSockId:null
                     , videoIsPlaying:false
+                    , audio:false
                     //, chromeExtensionInstalled:false
                 }
             }
         }        
     
 
-component.exports.template = {v:4,t:[{t:4,f:[{p:[2,1,27],t:7,e:"br"}," ",{p:[3,1,32],t:7,e:"div",f:[{p:[4,5,42],t:7,e:"button",m:[{n:"disabled",f:[{t:2,x:{r:["broadcasterSockId","videoIsPlaying"],s:"_0||_1"},p:[4,22,59]}],t:13},{n:"primary",f:0,t:13},{n:"click",f:"startBroadcast",t:70}],f:["Share my screen"]}]}],n:50,x:{r:["broadcasterSockId"],s:"!_0"},p:[1,1,0]},{t:4,f:[{p:[9,1,202],t:7,e:"p",m:[{n:"style",f:["visibility:",{t:2,x:{r:["videoIsPlaying"],s:"_0?\"visible\":\"hidden\""},p:[9,22,223]}],t:13}],f:["Your screen is now visible at: ",{p:[10,1,295],t:7,e:"a",m:[{n:"href",f:[{t:2,r:"loc",p:[10,10,304]},"?id=",{t:2,r:"mysockid",p:[10,21,315]}],t:13},{n:"target",f:"_blank",t:13}],f:[{t:2,r:"loc",p:[10,51,345]},"?id=",{t:2,r:"mysockid",p:[10,62,356]}]}]}," "],n:50,x:{r:["broadcasterSockId"],s:"!_0"},p:[8,1,175]},{p:[14,1,443],t:7,e:"div",m:[{n:"id",f:"vn",t:13}],f:[{p:[15,5,461],t:7,e:"video",m:[{n:"style",f:["width: ",{t:2,x:{r:["broadcasterSockId"],s:"_0?\"100%\":\"39em\""},p:[15,26,482]},";"],t:13},{n:"controls",f:0,t:13},{n:"id",f:"video",t:13}]}," ",{t:4,f:[{p:[16,28,576],t:7,e:"noise",m:[{n:"w",f:[{t:2,x:{r:["broadcasterSockId"],s:"_0?\"100%\":\"39em\""},p:[16,38,586]}],t:13},{n:"id",f:"noise",t:13}]}],n:50,x:{r:["videoIsPlaying"],s:"!_0"},p:[16,5,553]}]}],e:{"_0||_1":function (_0,_1){return(_0||_1);},"!_0":function (_0){return(!_0);},"_0?\"visible\":\"hidden\"":function (_0){return(_0?"visible":"hidden");},"_0?\"100%\":\"39em\"":function (_0){return(_0?"100%":"39em");}}};
+component.exports.template = {v:4,t:[{t:4,f:[{p:[2,1,27],t:7,e:"br"}," ",{p:[3,1,32],t:7,e:"div",f:[{p:[4,5,42],t:7,e:"button",m:[{n:"disabled",f:[{t:2,x:{r:["broadcasterSockId","videoIsPlaying"],s:"_0||_1"},p:[4,22,59]}],t:13},{n:"primary",f:0,t:13},{n:"click",f:"startBroadcast",t:70}],f:["Share my screen"]}," ",{p:[5,5,163],t:7,e:"input",m:[{n:"disabled",f:[{t:2,x:{r:["broadcasterSockId","videoIsPlaying"],s:"_0||_1"},p:[5,21,179]}],t:13},{n:"type",f:"checkbox",t:13},{n:"id",f:"checkbox-2",t:13},{n:"checked",f:[{t:2,r:"audio",p:[5,103,261]}],t:13}]}," ",{p:[6,5,278],t:7,e:"label",m:[{n:"for",f:"checkbox-2",t:13}],f:["Multiple rows"]}]}],n:50,x:{r:["broadcasterSockId"],s:"!_0"},p:[1,1,0]},{t:4,f:[{p:[11,1,371],t:7,e:"p",m:[{n:"style",f:["visibility:",{t:2,x:{r:["videoIsPlaying"],s:"_0?\"visible\":\"hidden\""},p:[11,22,392]}],t:13}],f:["Your screen is now visible at: ",{p:[12,1,464],t:7,e:"a",m:[{n:"href",f:[{t:2,r:"loc",p:[12,10,473]},"?id=",{t:2,r:"mysockid",p:[12,21,484]}],t:13},{n:"target",f:"_blank",t:13}],f:[{t:2,r:"loc",p:[12,51,514]},"?id=",{t:2,r:"mysockid",p:[12,62,525]}]}]}," "],n:50,x:{r:["broadcasterSockId"],s:"!_0"},p:[10,1,344]},{p:[16,1,612],t:7,e:"div",m:[{n:"id",f:"vn",t:13}],f:[{p:[17,5,630],t:7,e:"video",m:[{n:"style",f:["width: ",{t:2,x:{r:["broadcasterSockId"],s:"_0?\"100%\":\"39em\""},p:[17,26,651]},";"],t:13},{n:"controls",f:0,t:13},{n:"id",f:"video",t:13}]}," ",{t:4,f:[{p:[18,28,745],t:7,e:"noise",m:[{n:"w",f:[{t:2,x:{r:["broadcasterSockId"],s:"_0?\"100%\":\"39em\""},p:[18,38,755]}],t:13},{n:"id",f:"noise",t:13}]}],n:50,x:{r:["videoIsPlaying"],s:"!_0"},p:[18,5,722]}]}],e:{"_0||_1":function (_0,_1){return(_0||_1);},"!_0":function (_0){return(!_0);},"_0?\"visible\":\"hidden\"":function (_0){return(_0?"visible":"hidden");},"_0?\"100%\":\"39em\"":function (_0){return(_0?"100%":"39em");}}};
 component.exports.css = "#video,#vn{width:100%}#vn{position:relative}";
 module.exports = Ractive.extend(component.exports);
 
