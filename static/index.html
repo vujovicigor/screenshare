@@ -24,6 +24,36 @@
             align-items: center;
             padding-top: 0 !important;
         }     
+        .puf {
+          animation-fill-mode: forward;
+          animation: puf-anim 0.9s both; 
+          font-weight: bold;
+        }
+
+        @keyframes puf-anim {
+          0% {
+            transform: opacity(0);
+            animation-timing-function: ease-in;
+            opacity: 0;
+          }
+          24% {
+            transform: translateY(-10px);
+            opacity: 1;
+          } 
+          54% {
+            transform: translateY(-13px);
+            opacity: 1;
+          }  
+          74% {
+            transform: translateY(-15px);
+            opacity: 1;
+          }    
+          100% {
+            transform: translateY(-64px);
+            opacity: 0;
+          }
+        }
+                
     </style>
     
 

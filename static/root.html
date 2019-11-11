@@ -33,6 +33,11 @@
 </g>
 </svg>
 
+{{#if puf}}
+<div class="puf">
+  <center>Only 3 allowed</center>
+</div>
+{{/if}}
 </p>
 <!-- <qrcode url="{{loc}}?id={{mysockid}}"></qrcode> -->
 {{/if}}
@@ -68,6 +73,10 @@
                 self.on('cp2kb', function(){
                   var link = self.get('loc') + '?id=' + self.get('mysockid')
                   navigator.clipboard.writeText(link)//.then(e=>iziToast.success({ message: 'Code copied to clipboard.'}))
+                  self.set('puf', true);
+                  setTimeout(function(){
+                    self.set('puf', false);
+                  },900)
                 })
 
                 self.on('startBroadcast', function(){
