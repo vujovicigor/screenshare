@@ -1,8 +1,11 @@
 {{#if !broadcasterSockId}}
 <br>
 <div>
-    <button disabled={{ broadcasterSockId || videoIsPlaying}} primary on-click="startBroadcast">Share my screen</button>
-<!--
+    <button style="margin-bottom: 0;" disabled={{ broadcasterSockId || videoIsPlaying}} primary on-click="startBroadcast">Share my screen</button>
+    <br>
+    <small>*Broadcast works only on Chrome desktop(Win/Mac/Linux)<small>
+    </small></small>
+    <!--
     <input disabled={{ broadcasterSockId || videoIsPlaying}} type="checkbox" id="checkbox-2" checked="{{audio}}"> 
     <label for="checkbox-2">Audio</label>    
 -->
