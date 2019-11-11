@@ -26067,7 +26067,7 @@ var component = module;
                   self.set('puf', true);
                   setTimeout(function(){
                     self.set('puf', false);
-                  },900)
+                  },500)
                 })
 
                 self.on('startBroadcast', function(){
